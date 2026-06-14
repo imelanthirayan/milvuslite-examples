@@ -1,0 +1,57 @@
+database:
+  name: examples_db
+  path: ./data/examples.db
+
+logging:
+  enabled: true
+  level: INFO
+  log_to_console: true
+  log_to_file: false
+  log_duration_ms: true
+  log_operations: true
+  redact_vectors: true
+
+defaults:
+  auto_create_collection: true
+  auto_create_index: true
+  auto_load_collection: true
+  default_metric_type: COSINE
+  default_index_type: FLAT
+
+collections:
+  documents:
+    enabled: true
+    description: General document store with semantic search
+    primary_key:
+      field: id
+      auto_id: false
+    columns:
+      - name: title
+        type: text
+        required: true
+        description: Document title
+      - name: content
+        type: text
+        required: true
+        description: Full document content
+      - name: category
+        type: text
+        description: Document category (e.g. database, tutorial, ml)
+      - name: score
+        type: float
+        description: Relevance or quality score
+      - name: published
+        type: bool
+        description: Whether the document is publicly published
+      - name: metadata
+        type: json
+        description: Arbitrary key-value metadata (author, tags, etc.)
+      - name: embedding
+        type: vector
+        dimension: 128
+        metric_type: COSINE
+        description: Semantic embedding of the document content
+        index:
+          enabled: true
+          type: FLAT
+          params: {}
